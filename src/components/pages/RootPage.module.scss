@@ -1,0 +1,148 @@
+.main {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: 100vh;
+
+  padding: 0 0;
+  padding-top: 30vh;
+  margin: auto;
+}
+
+.shadows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: linear-gradient(
+    142deg,
+    rgba(55, 158, 190, 0.4) 0%,
+    rgba(55, 158, 190, 0) 25%
+  );
+
+  pointer-events: none;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 70%;
+    bottom: 60%;
+
+    background: linear-gradient(to top left, #5fc6e6, #84e1fd);
+
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+  }
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 85%;
+    bottom: 80%;
+
+    background: linear-gradient(to bottom right, #000, #5fc6e6);
+
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+  }
+}
+
+.shadows-secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background: linear-gradient(
+    -40deg,
+    rgba(55, 158, 190, 0.4) 0%,
+    rgba(55, 158, 190, 0) 25%
+  );
+
+  pointer-events: none;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 60%;
+    left: 70%;
+    right: 0%;
+    bottom: 0%;
+
+    background: linear-gradient(to top left, #000, #5fc6e6);
+
+    clip-path: polygon(100% 100%, 0% 100%, 100% 0%);
+  }
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 80%;
+    left: 87%;
+    right: 0%;
+    bottom: 0%;
+
+    background: linear-gradient(to top left, #84e1fd, #5fc6e6);
+
+    clip-path: polygon(100% 100%, 0% 100%, 100% 0%);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem;
+
+  background: var(--color-surface);
+
+  border-radius: 2rem;
+
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 4rem;
+
+  margin: 0 0;
+  margin-bottom: 10rem;
+
+  span:nth-of-type(1) {
+    color: #03367e;
+  }
+
+  span:nth-of-type(2) {
+    color: #134487;
+  }
+}
+
+.description {
+  font-size: 2rem;
+}
+
+.dashboard {
+  margin: auto;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+
+  background: linear-gradient(to top left, #5fc6e6, #84e1fd);
+
+  border-radius: 1rem;
+
+  font-size: 1.5rem;
+  text-decoration: none;
+}
