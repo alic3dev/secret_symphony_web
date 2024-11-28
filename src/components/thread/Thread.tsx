@@ -1,4 +1,4 @@
-import type { MessageData } from '@/components/thread/types'
+import type { MessageData, ReplyMessageData } from '@/components/thread/types'
 
 import React from 'react'
 
@@ -12,9 +12,16 @@ interface ThreadProps {
     to?: string
   }
   messages: MessageData[]
+  sendMessage: (replyMessageData: ReplyMessageData) => void
 }
 
-export function Thread({ messages, images }: ThreadProps): React.ReactElement {
+export function Thread({
+  messages,
+  images,
+  sendMessage,
+}: ThreadProps): React.ReactElement {
+  const [replyText, setReplyText] = React.useState<string>('')
+
   const messagesContainerRef = React.useRef<HTMLDivElement>(null)
   const previousScrollRef = React.useRef<{
     scrollTop: number
@@ -53,6 +60,22 @@ export function Thread({ messages, images }: ThreadProps): React.ReactElement {
     [],
   )
 
+  const onSendSubmit = React.useCallback<
+    React.FormEventHandler<HTMLFormElement>
+  >(
+    (event: React.FormEvent<HTMLFormElement>): void => {
+      event.preventDefault()
+      event.stopPropagation()
+
+      sendMessage({
+        content: replyText,
+      })
+
+      setReplyText('')
+    },
+    [replyText, sendMessage],
+  )
+
   React.useEffect((): void => {
     setMessagesScroll(Infinity)
   }, [setMessagesScroll])
@@ -81,14 +104,16 @@ export function Thread({ messages, images }: ThreadProps): React.ReactElement {
         </div>
       </div>
 
-      <div className={styles.reply}>
+      <form className={styles.reply} onSubmit={onSendSubmit}>
         <input
           className={styles['reply-input']}
           type="text"
           placeholder="Type your message"
+          value={replyText}
+          onChange={(event): void => setReplyText(event.currentTarget.value)}
         />
         <button className={styles['reply-submit']} type="submit" />
-      </div>
+      </form>
     </div>
   )
 }
