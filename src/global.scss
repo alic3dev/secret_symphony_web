@@ -1,0 +1,68 @@
+:root {
+  --height-header: 40px;
+  --height-reply: 100px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-text: #000000;
+    --color-base: #efefef;
+    --color-mantle: #e0e0e0;
+
+    --color-surface: #fafafa;
+    --color-surface-darker: #cccccc;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #ffffff;
+    --color-base: #242424;
+    --color-mantle: #363636;
+
+    --color-surface: #606060;
+    --color-surface-darker: #404040;
+  }
+}
+
+html,
+body,
+:root {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100vh;
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  color-scheme: light dark;
+
+  color: var(--color-text);
+  background-color: var(--color-base);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  height: 100vh;
+}
+
+button {
+  cursor: pointer;
+}

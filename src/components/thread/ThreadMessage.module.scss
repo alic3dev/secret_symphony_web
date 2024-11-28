@@ -1,0 +1,22 @@
+.message {
+  display: flex;
+  align-items: center;
+
+  &.to {
+    justify-self: right;
+  }
+}
+
+.content {
+  background: var(--color-surface);
+
+  margin: 1rem 1rem;
+  padding: 1rem;
+
+  border-radius: 1rem;
+}
+
+.bubble-wrapper {
+  flex: 0;
+  flex-shrink: 0;
+}
