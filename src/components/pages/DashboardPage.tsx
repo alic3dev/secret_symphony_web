@@ -62,7 +62,7 @@ const DEV_SEND_RANDOM_MESSAGES: boolean = true
 
 function generateRandomMessage(): MessageData {
   let content: string = ''
-  const contentWords: number = Math.floor(Math.random() * 100)
+  const contentWords: number = Math.floor(Math.random() * 100) + 1
 
   for (let i: number = 0; i < contentWords; i++) {
     content += ` ${wordList[Math.floor(Math.random() * wordList.length)]}`
