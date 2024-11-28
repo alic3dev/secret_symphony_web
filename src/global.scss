@@ -66,3 +66,13 @@ body,
 button {
   cursor: pointer;
 }
+
+a {
+  &,
+  &:hover,
+  &:link,
+  &:active,
+  &:visited {
+    color: var(--color-text);
+  }
+}
