@@ -1,42 +1,36 @@
+import type { UUID } from 'crypto'
+
+import type { ThreadData } from '@/components/thread/types'
+
 import React from 'react'
 
 import { ThreadLabel } from '@/components/ThreadLabel'
 
 import styles from '@/components/layout/Sidebar.module.scss'
 
-interface ThreadData {
-  image?: string
-  title: string
+export interface SidebarProps {
+  threads: ThreadData[]
+  selectThread: (newThreadId: UUID) => void
+  selectedThread: UUID
 }
 
-const threads: ThreadData[] = [
-  {
-    image: 'https://vite.dev/viteconf.svg',
-    title: 'Some Person',
-  },
-  {
-    title: 'Another Person',
-  },
-  {
-    title: 'This other person',
-  },
-]
-
-export function Sidebar(): React.ReactElement {
-  const [selectedThread, setSelectedThread] = React.useState<number>(0)
-
+export function Sidebar({
+  threads,
+  selectThread,
+  selectedThread,
+}: SidebarProps): React.ReactElement {
   return (
     <div className={styles['side-bar']}>
       <h1 className={styles.header}>Threads</h1>
 
       {threads.map(
-        (thread: ThreadData, index: number): React.ReactElement => (
+        (thread: ThreadData): React.ReactElement => (
           <ThreadLabel
-            image={thread.image}
-            title={thread.title}
-            selected={selectedThread === index}
-            onClick={(): void => setSelectedThread(index)}
-            key={index}
+            image={thread.from.image}
+            title={thread.from.name}
+            selected={selectedThread === thread.id}
+            onClick={(): void => selectThread(thread.id)}
+            key={thread.id}
           />
         ),
       )}
