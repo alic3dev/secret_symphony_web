@@ -1,3 +1,5 @@
+import type { UUID } from 'crypto'
+
 /**
  * `from` | `to` is a confusing desingation
  *
@@ -14,4 +16,19 @@ export type MessageDirection = 'from' | 'to'
 export interface MessageData {
   content: string
   direction: MessageDirection
+}
+
+export interface ReplyMessageData {
+  content: string
+}
+
+export interface ClientInfoData {
+  name: string
+  image?: string
+}
+
+export interface ThreadData {
+  id: UUID
+  from: ClientInfoData
+  messages: MessageData[]
 }
