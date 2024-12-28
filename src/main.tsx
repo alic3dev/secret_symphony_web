@@ -5,11 +5,15 @@ import * as ReactRouter from 'react-router'
 import { RootPage } from '@/components/pages/RootPage'
 import { DashboardPage } from '@/components/pages/DashboardPage'
 
+import { transmit } from './utils/wire'
+
 import './global.scss'
 
 const rootElement: HTMLElement | null = document.getElementById('root')
 
 if (rootElement) {
+  window.transmit = transmit
+
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <ReactRouter.BrowserRouter>
