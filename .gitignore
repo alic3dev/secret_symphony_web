@@ -25,4 +25,5 @@ dist-ssr
 
 src/data/wordlists
 
-thread-image.jpeg
+public/images/*
+public/images/**/*
