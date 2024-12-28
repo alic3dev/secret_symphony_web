@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router'
+import * as ReactRouter from 'react-router'
 
 import { RootPage } from '@/components/pages/RootPage'
 import { DashboardPage } from '@/components/pages/DashboardPage'
@@ -12,13 +12,13 @@ const rootElement: HTMLElement | null = document.getElementById('root')
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RootPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="*" element={<p>ASJDFIKLJ</p>} />
-        </Routes>
-      </BrowserRouter>
+      <ReactRouter.BrowserRouter>
+        <ReactRouter.Routes>
+          <ReactRouter.Route path="/" element={<RootPage />} />
+          <ReactRouter.Route path="/dashboard" element={<DashboardPage />} />
+          <ReactRouter.Route path="*" element={<p>ASJDFIKLJ</p>} />
+        </ReactRouter.Routes>
+      </ReactRouter.BrowserRouter>
     </React.StrictMode>,
   )
 } else {
