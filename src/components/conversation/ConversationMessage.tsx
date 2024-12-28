@@ -2,20 +2,20 @@ import type { MessageDirection } from './types'
 
 import React from 'react'
 
-import styles from '@/components/thread/ThreadMessage.module.scss'
+import styles from '@/components/conversation/ConversationMessage.module.scss'
 import { ImageBubble } from '../ImageBubble'
 
-interface ThreadMessageProps {
+interface ConversationMessageProps {
   image?: string
   content: string
   direction: MessageDirection
 }
 
-export function ThreadMessage({
+export function ConversationMessage({
   image,
   content,
   direction,
-}: ThreadMessageProps): React.ReactElement {
+}: ConversationMessageProps): React.ReactElement {
   return (
     <div
       className={`${styles.message} ${

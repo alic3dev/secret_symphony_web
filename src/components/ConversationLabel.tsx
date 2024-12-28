@@ -1,9 +1,9 @@
 import React from 'react'
 
-import styles from '@/components/ThreadLabel.module.scss'
+import styles from '@/components/ConversationLabel.module.scss'
 import { ImageBubble } from './ImageBubble'
 
-export interface ThreadLabelProps {
+export interface ConversationLabelProps {
   image?: string
   title: string
   selected?: boolean
@@ -11,15 +11,17 @@ export interface ThreadLabelProps {
   onClick?: () => void
 }
 
-export function ThreadLabel({
+export function ConversationLabel({
   image,
   title,
   selected = false,
   onClick = () => {},
-}: ThreadLabelProps): React.ReactElement {
+}: ConversationLabelProps): React.ReactElement {
   return (
     <div
-      className={`${styles['thread-label']} ${selected ? styles.selected : ''}`}
+      className={`${styles['conversation-label']} ${
+        selected ? styles.selected : ''
+      }`}
       onClick={onClick}
     >
       <ImageBubble src={image} />
