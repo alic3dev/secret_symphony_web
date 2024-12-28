@@ -3,62 +3,25 @@ import type { UUID } from 'crypto'
 import type {
   MessageData,
   ReplyMessageData,
-  ThreadData,
-} from '@/components/thread/types'
+  ConversationData,
+} from '@/components/conversation/types'
 
 import React from 'react'
 
 import { Header, Sidebar } from '@/components/layout'
-import { Thread } from '@/components/thread'
+import { Conversation } from '@/components/conversation'
+
+import { transmit } from '@/utils/wire/transmit'
 
 import styles from '@/components/pages/DashboardPage.module.scss'
 
-const mockThreads: ThreadData[] = [
-  {
-    id: crypto.randomUUID(),
-    from: {
-      image: 'https://vite.dev/viteconf.svg',
-      name: 'Some Person',
-    },
-    messages: [
-      {
-        content: 'This is the starting message',
-        direction: 'to',
-      },
-      {
-        content: 'Well hello',
-        direction: 'from',
-      },
-      {
-        content: '...who is this?',
-        direction: 'from',
-      },
-      {
-        content: 'Alice lol',
-        direction: 'to',
-      },
-    ],
-  },
-  {
-    id: crypto.randomUUID(),
-    from: {
-      name: 'Another Person',
-    },
-    messages: [],
-  },
-  {
-    id: crypto.randomUUID(),
-    from: {
-      name: 'The third Person',
-    },
-    messages: [],
-  },
-]
+import { identity } from '@/data/People'
 
 import _wordList from '@/data/wordlists/english.json'
+
 const wordList: string[] = _wordList as string[]
 
-const DEV_SEND_RANDOM_MESSAGES: boolean = true
+const DEV_SEND_RANDOM_MESSAGES: boolean = false
 
 function generateRandomMessage(): MessageData {
   let content: string = ''
@@ -70,28 +33,79 @@ function generateRandomMessage(): MessageData {
 
   return {
     content,
-    direction: Math.random() > 0.6 ? 'to' : 'from',
+    direction: 'from',
   }
 }
 
-export function DashboardPage(): React.ReactElement {
-  const [selectedThread, setSelectedThread] = React.useState<UUID>(
-    mockThreads[0].id,
+// const ws = new WebSocket("ws:\\\localhost:8888");
+// ws.addEventListener("message", (data) => console.log(data))
+
+export interface DashboardProps {
+  conversations: ConversationData[]
+}
+
+export function Dashboard({
+  conversations,
+}: DashboardProps): React.ReactElement {
+  const [refreshKey, setRefreshKey] = React.useState<number>(0)
+  const refresh = React.useCallback((): void => {
+    setRefreshKey(
+      (previousRefreshKey: number): number => previousRefreshKey + 1,
+    )
+  }, [])
+
+  const [selectedConversation, setSelectedConversation] = React.useState<UUID>(
+    conversations[0].from.id,
   )
 
-  const threadData = React.useMemo<ThreadData | undefined>(
-    (): ThreadData | undefined =>
-      mockThreads.find(
-        (thread: ThreadData): boolean => thread.id === selectedThread,
+  const conversationData = React.useMemo<ConversationData | undefined>(
+    (): ConversationData | undefined =>
+      conversations.find(
+        (conversation: ConversationData): boolean =>
+          conversation.from.id === selectedConversation,
       ),
-    [selectedThread],
+    [conversations, selectedConversation],
   )
 
   const [newMessages, setNewMessages] = React.useState<MessageData[]>([])
 
+  React.useEffect((): undefined | (() => void) => {
+    if (!conversationData) return
+
+    let aborted: boolean = false
+
+    transmit('/conversation/get_conversation', {
+      id: conversationData.from.id,
+    })
+      .then(
+        (
+          res: Response,
+        ): Promise<{ data: { messages: MessageData[] } }> | undefined => {
+          if (aborted) return
+
+          return res.json() as Promise<{ data: { messages: MessageData[] } }>
+        },
+      )
+      .then((data: undefined | { data: { messages: MessageData[] } }): void => {
+        if (aborted || !data) return
+
+        setNewMessages((prevNewMessages) => [
+          ...prevNewMessages,
+          ...data.data.messages,
+        ])
+      })
+
+    return (): void => {
+      aborted = true
+    }
+  }, [conversationData, refresh])
+
   const messages = React.useMemo<MessageData[]>(
-    (): MessageData[] => [...(threadData?.messages ?? []), ...newMessages],
-    [threadData, newMessages],
+    (): MessageData[] => [
+      ...(conversationData?.messages ?? []),
+      ...newMessages,
+    ],
+    [conversationData, newMessages],
   )
 
   React.useEffect((): (() => void) => {
@@ -116,38 +130,100 @@ export function DashboardPage(): React.ReactElement {
     }
   }, [])
 
-  const selectThread = React.useCallback((newThreadId: UUID): void => {
-    setSelectedThread(newThreadId)
-    setNewMessages([])
-  }, [])
-
-  const sendMessage = React.useCallback(
-    (replyMessageData: ReplyMessageData): void => {
-      setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
-        ...prevNewMessages,
-        { direction: 'to', ...replyMessageData },
-      ])
+  const selectConversation = React.useCallback(
+    (selectedConversationId: UUID): void => {
+      setSelectedConversation(selectedConversationId)
+      setNewMessages([])
     },
     [],
   )
 
+  const sendMessage = React.useCallback(
+    (replyMessageData: ReplyMessageData): void => {
+      if (conversationData) {
+        transmit('/conversation/speak_in_conversation', {
+          id: conversationData.from.id,
+          ...replyMessageData,
+        })
+
+        setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
+          ...prevNewMessages,
+          { direction: 'to', ...replyMessageData },
+        ])
+      }
+    },
+    [conversationData],
+  )
+
   return (
-    <>
+    <React.Fragment key={refreshKey}>
       <Header />
 
       <div className={styles.content}>
         <Sidebar
-          threads={mockThreads}
-          selectThread={selectThread}
-          selectedThread={selectedThread}
+          conversations={conversations}
+          selectConversation={selectConversation}
+          selectedConversation={selectedConversation}
         />
 
-        <Thread
-          images={{ from: threadData?.from.image, to: '/thread-image.jpeg' }}
+        <Conversation
+          images={{
+            from: `/images/people/${conversationData?.from.image}`,
+            to: `/images/${identity.image}`,
+          }}
           messages={messages}
           sendMessage={sendMessage}
         />
       </div>
-    </>
+    </React.Fragment>
   )
+}
+
+export function DashboardPage(): React.ReactElement {
+  const [conversations, setConversations] = React.useState<
+    ConversationData[] | null
+  >(null)
+  const [error, setError] = React.useState<string | null>(null)
+
+  React.useEffect((): (() => void) => {
+    let aborted: boolean = false
+
+    transmit('/dashboard/load_dashboard', {})
+      .then(
+        (
+          res: Response,
+        ): Promise<{ conversations: ConversationData[] }> | undefined => {
+          if (aborted) return
+
+          return res.json()
+        },
+      )
+      .then((data: { conversations: ConversationData[] } | undefined): void => {
+        if (aborted) return
+
+        if (
+          !data ||
+          typeof data !== 'object' ||
+          Array.isArray(data) ||
+          !Array.isArray(data.conversations)
+        ) {
+          setError('Invalid data returned from server')
+          return
+        }
+
+        setConversations(data.conversations)
+      })
+
+    return (): void => {
+      aborted = true
+    }
+  }, [])
+
+  if (error !== null) {
+    return <p>{error}</p>
+  } else if (conversations === null) {
+    return <p>Loading...</p>
+  } else {
+    return <Dashboard conversations={conversations} />
+  }
 }
