@@ -14,13 +14,11 @@ export function RootPage(): React.ReactElement {
           <span>Secret</span> <span>Symphony</span>
         </h1>
 
-        {/* <div className={styles.container}> */}
         <p className={styles.description}>A secure communication platform.</p>
 
         <Link to="/dashboard" className={styles.dashboard}>
           Dashboard
         </Link>
-        {/* </div> */}
       </main>
     </div>
   )
