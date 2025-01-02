@@ -1,0 +1,26 @@
+import React from 'react'
+
+import styles from '@/components/pages/LoginPage.module.scss'
+import { LoginForm } from '@/components/forms/LoginForm'
+import { Header } from '@/components/layout/Header'
+
+export function LoginPage(): React.ReactElement {
+  return (
+    <div className={styles['login-page']}>
+      <Header />
+
+      <div className={styles.background}>
+        SECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONY
+      </div>
+      <div className={styles['background-secondary']}>
+        SECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONY
+      </div>
+
+      <div className={styles['login-form-container']}>
+        <h2 className={styles['login-form-heading']}>LOGIN</h2>
+
+        <LoginForm />
+      </div>
+    </div>
+  )
+}
