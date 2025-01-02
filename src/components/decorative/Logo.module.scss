@@ -2,42 +2,22 @@
   display: inline-block;
   position: relative;
 
+  font-family: monospace;
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 900;
 
   text-decoration: none;
 
   span:nth-of-type(1) {
     position: relative;
-    color: #03367e;
+    color: var(--color-accent);
     z-index: 1;
   }
 
   span:nth-of-type(2) {
     position: relative;
-    color: #134487;
+    color: var(--color-accent-secondary);
 
     z-index: 3;
   }
-}
-
-.bar {
-  content: '';
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 140%;
-  height: 0.5rem;
-
-  background: linear-gradient(to right, #2d5d9f, #4377c1);
-
-  border-radius: 10rem;
-
-  transform: translate(-50%, -50%) rotate(26deg);
-
-  z-index: 2;
-
-  opacity: 0.95;
 }
