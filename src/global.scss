@@ -1,6 +1,13 @@
 :root {
   --height-header: 40px;
   --height-reply: 100px;
+
+  --color-accent: #b61a5e;
+  --color-accent-secondary: #de095b;
+  --color-accent-text: #ffffff;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
 }
 
 @media (prefers-color-scheme: light) {
@@ -9,6 +16,7 @@
     --color-base: #efefef;
     --color-mantle: #e0e0e0;
 
+    --color-surface-lighter: #ffffff;
     --color-surface: #fafafa;
     --color-surface-darker: #cccccc;
   }
@@ -20,6 +28,7 @@
     --color-base: #242424;
     --color-mantle: #363636;
 
+    --color-surface-lighter: #707070;
     --color-surface: #606060;
     --color-surface-darker: #404040;
   }
@@ -72,10 +81,6 @@ body,
   height: 100vh;
 }
 
-button {
-  cursor: pointer;
-}
-
 a {
   &,
   &:hover,
@@ -84,4 +89,44 @@ a {
   &:visited {
     color: var(--color-text);
   }
+}
+
+button,
+a.button {
+  height: 2.5rem;
+
+  cursor: pointer;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-mantle);
+  border-radius: 0px;
+
+  margin: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  padding-top: 0.375rem;
+
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+input {
+  background: var(--color-surface-lighter);
+  border: 1px solid var(--color-mantle);
+  border-radius: 0px;
+
+  margin: 0.25rem;
+  padding: 0.25rem 0.75rem;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+
+    border-color: var(--color-accent);
+  }
+}
+
+.button-group {
+  display: flex;
 }
