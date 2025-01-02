@@ -70,6 +70,10 @@ export function Conversation({
       event.preventDefault()
       event.stopPropagation()
 
+      if (!replyText.length) {
+        return
+      }
+
       sendMessage({
         content: replyText,
       })
