@@ -15,28 +15,6 @@ import { transmit } from '@/utils/wire/transmit'
 
 import styles from '@/components/pages/DashboardPage.module.scss'
 
-import { identity } from '@/data/People'
-
-import _wordList from '@/data/wordlists/english.json'
-
-const wordList: string[] = _wordList as string[]
-
-const DEV_SEND_RANDOM_MESSAGES: boolean = false
-
-function generateRandomMessage(): MessageData {
-  let content: string = ''
-  const contentWords: number = Math.floor(Math.random() * 100) + 1
-
-  for (let i: number = 0; i < contentWords; i++) {
-    content += ` ${wordList[Math.floor(Math.random() * wordList.length)]}`
-  }
-
-  return {
-    content,
-    direction: 'from',
-  }
-}
-
 // const ws = new WebSocket("ws:\\\localhost:8888");
 // ws.addEventListener("message", (data) => console.log(data))
 
@@ -108,28 +86,6 @@ export function Dashboard({
     [conversationData, newMessages],
   )
 
-  React.useEffect((): (() => void) => {
-    let timeoutId: number
-
-    const sendRandomMessage = (): void => {
-      timeoutId = window.setTimeout((): void => {
-        if (DEV_SEND_RANDOM_MESSAGES) {
-          setNewMessages((prevNewMessages: MessageData[]): MessageData[] => {
-            return [...prevNewMessages, generateRandomMessage()]
-          })
-        }
-
-        sendRandomMessage()
-      }, Math.random() * 10000 + 1000)
-    }
-
-    sendRandomMessage()
-
-    return (): void => {
-      window.clearTimeout(timeoutId)
-    }
-  }, [])
-
   const selectConversation = React.useCallback(
     (selectedConversationId: UUID): void => {
       setSelectedConversation(selectedConversationId)
@@ -169,7 +125,7 @@ export function Dashboard({
         <Conversation
           images={{
             from: `/images/people/${conversationData?.from.image}`,
-            to: `/images/${identity.image}`,
+            to: `/images/Alice.jpeg`, // TODO: Don't hardcode this value
           }}
           messages={messages}
           sendMessage={sendMessage}
