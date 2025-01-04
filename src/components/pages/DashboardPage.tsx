@@ -1,10 +1,6 @@
 import type { UUID } from 'crypto'
 
-import type {
-  MessageData,
-  ReplyMessageData,
-  ConversationData,
-} from '@/components/conversation/types'
+import type { MessageData, ReplyMessageData, ConversationData } from '@/types'
 
 import React from 'react'
 

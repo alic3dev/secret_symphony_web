@@ -1,4 +1,4 @@
-import type { MessageDirection } from './types'
+import type { MessageDirection } from '@/types'
 
 import React from 'react'
 
