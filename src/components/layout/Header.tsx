@@ -16,7 +16,7 @@ export function Header(): React.ReactElement {
     <div className={styles.header}>
       <Logo />
 
-      {window.id ? (
+      {window.loggedIn ? (
         <button onClick={logout}>X</button>
       ) : (
         <a className="button" href="/login">

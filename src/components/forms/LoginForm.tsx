@@ -1,4 +1,4 @@
-import type { UUID } from 'crypto'
+import type { StoredId } from '@/utils/identity'
 
 import React from 'react'
 
@@ -36,17 +36,13 @@ export function LoginForm(): React.ReactElement {
           password,
         })
 
-        const data: { id: UUID; token: string } | { error: string } =
-          await res.json()
+        const data: StoredId | { error: string } = await res.json()
 
         if (Object.prototype.hasOwnProperty.call(data, 'error')) {
           setState('error')
           setError((data as { error: string }).error)
         } else if (Object.prototype.hasOwnProperty.call(data, 'token')) {
-          const id: UUID = (data as { id: UUID }).id
-          const token: string = (data as { token: string }).token
-
-          storeId({ id, token })
+          storeId(data as StoredId)
 
           window.location.reload()
         } else {

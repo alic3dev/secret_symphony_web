@@ -125,7 +125,7 @@ export function Dashboard({
         <Conversation
           images={{
             from: `/images/people/${conversationData?.from.image}`,
-            to: `/images/Alice.jpeg`, // TODO: Don't hardcode this value
+            to: `/images/people/${window.identity.image}`,
           }}
           messages={messages}
           sendMessage={sendMessage}
