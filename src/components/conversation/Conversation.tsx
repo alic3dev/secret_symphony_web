@@ -1,7 +1,4 @@
-import type {
-  MessageData,
-  ReplyMessageData,
-} from '@/components/conversation/types'
+import type { MessageData, ReplyMessageData } from '@/types'
 
 import React from 'react'
 

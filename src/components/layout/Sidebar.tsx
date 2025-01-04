@@ -1,6 +1,6 @@
 import type { UUID } from 'crypto'
 
-import type { ConversationData } from '@/components/conversation/types'
+import type { ConversationData } from '@/types'
 
 import React from 'react'
 

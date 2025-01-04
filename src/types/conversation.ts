@@ -1,4 +1,4 @@
-import type { Person } from '@/data/People'
+import type { UserFull } from './user'
 
 /**
  * `from` | `to` is a confusing desingation
@@ -23,6 +23,6 @@ export interface ReplyMessageData {
 }
 
 export interface ConversationData {
-  from: Person
+  from: UserFull
   messages: MessageData[]
 }
