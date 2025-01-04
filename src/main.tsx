@@ -5,7 +5,7 @@ import { Router } from '@/components/Router'
 
 import { ca } from '@/utils/ca'
 
-import './global.scss'
+import '@/global.scss'
 
 const rootElement: HTMLElement | null = document.getElementById('root')
 const DISPLAY_CA: boolean = false

@@ -1,7 +1,8 @@
 import React from 'react'
 
+import { ImageBubble } from '@/components/ImageBubble'
+
 import styles from '@/components/ConversationLabel.module.scss'
-import { ImageBubble } from './ImageBubble'
 
 export interface ConversationLabelProps {
   image?: string

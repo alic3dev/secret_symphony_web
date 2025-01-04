@@ -1,4 +1,4 @@
-import { transmit as _transmit } from './transmit'
+import { transmit as _transmit } from '@/utils/wire/transmit'
 
 export const transmit = _transmit
 
