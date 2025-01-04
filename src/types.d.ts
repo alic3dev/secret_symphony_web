@@ -1,8 +1,8 @@
-import type { UUID } from 'node:crypto'
+import type { StoredId } from '@/utils/identity'
 
 declare global {
   interface Window {
-    id: UUID | null
-    token: string | null
+    loggedIn: boolean
+    identity: StoredId
   }
 }

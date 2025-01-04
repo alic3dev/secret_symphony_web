@@ -4,12 +4,9 @@ export async function transmit(
 ): Promise<Response> {
   const authHeaders: Record<string, string> = {}
 
-  if (window.id) {
-    authHeaders['1YMX_W_SDEJF_WJKNK_JNKN_Z'] = encodeURI(window.id)
-  }
-
-  if (window.token) {
-    authHeaders['0X238bx04898349'] = window.token
+  if (window.loggedIn) {
+    authHeaders['1YMX_W_SDEJF_WJKNK_JNKN_Z'] = encodeURI(window.identity.id)
+    authHeaders['0X238bx04898349'] = window.identity.token
   }
 
   return window.fetch(

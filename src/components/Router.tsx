@@ -57,13 +57,16 @@ export function Router(): React.ReactElement {
             id: storedId.id,
             token: storedId.token,
           })
+
+          window.loggedIn = true
         } else {
           setIdentity({})
           clearStoredId()
+
+          window.loggedIn = false
         }
 
-        window.id = storedId.id
-        window.token = storedId.token
+        window.identity = storedId
 
         setIsLoading(false)
       })
