@@ -1,6 +1,7 @@
 import type { UUID } from 'crypto'
 
 import type { MessageData, ReplyMessageData, ConversationData } from '@/types'
+import type { WebSocketReceivedMessageMessageReceived } from '@/types/websocket'
 
 import React from 'react'
 
@@ -9,17 +10,20 @@ import { Conversation } from '@/components/conversation'
 
 import { transmit } from '@/utils/wire/transmit'
 
-import styles from '@/components/pages/DashboardPage.module.scss'
+import * as webSocket from '@/utils/websocketClient'
 
-// const ws = new WebSocket("ws:\\\localhost:8888");
-// ws.addEventListener("message", (data) => console.log(data))
+import styles from '@/components/pages/DashboardPage.module.scss'
 
 export interface DashboardProps {
   conversations: ConversationData[]
+  setConversations: React.Dispatch<
+    React.SetStateAction<ConversationData[] | null>
+  >
 }
 
 export function Dashboard({
   conversations,
+  setConversations,
 }: DashboardProps): React.ReactElement {
   const [refreshKey, setRefreshKey] = React.useState<number>(0)
   const refresh = React.useCallback((): void => {
@@ -28,9 +32,10 @@ export function Dashboard({
     )
   }, [])
 
-  const [selectedConversation, setSelectedConversation] = React.useState<UUID>(
-    conversations[0].from.id,
-  )
+  const [selectedConversation, setSelectedConversation] =
+    React.useState<UUID | null>(
+      conversations.length ? conversations[0].from.id : null,
+    )
 
   const conversationData = React.useMemo<ConversationData | undefined>(
     (): ConversationData | undefined =>
@@ -42,6 +47,64 @@ export function Dashboard({
   )
 
   const [newMessages, setNewMessages] = React.useState<MessageData[]>([])
+
+  const messages = React.useMemo<MessageData[]>(
+    (): MessageData[] => [
+      ...(conversationData?.messages ?? []),
+      ...newMessages,
+    ],
+    [conversationData, newMessages],
+  )
+
+  const selectConversation = React.useCallback(
+    (selectedConversationId: UUID): void => {
+      if (selectedConversation === selectedConversationId) {
+        return
+      }
+
+      setSelectedConversation(selectedConversationId)
+      setNewMessages([])
+
+      setConversations((previousConversations) => {
+        if (previousConversations === null) {
+          return null
+        }
+
+        const res = [...previousConversations]
+
+        const index: number = res.findIndex(
+          (convo: ConversationData): boolean =>
+            convo.from.id === selectedConversationId,
+        )
+
+        if (index !== -1) {
+          const convo: ConversationData = res.splice(index, 1)[0]
+
+          res.unshift(convo)
+        }
+
+        return res
+      })
+    },
+    [selectedConversation, setConversations],
+  )
+
+  const sendMessage = React.useCallback(
+    (replyMessageData: ReplyMessageData): void => {
+      if (conversationData) {
+        webSocket.sendMessage({
+          to: conversationData.from.id,
+          content: replyMessageData.content,
+        })
+
+        setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
+          ...prevNewMessages,
+          { direction: 'to', ...replyMessageData },
+        ])
+      }
+    },
+    [conversationData],
+  )
 
   React.useEffect((): undefined | (() => void) => {
     if (!conversationData) return
@@ -74,38 +137,30 @@ export function Dashboard({
     }
   }, [conversationData, refresh])
 
-  const messages = React.useMemo<MessageData[]>(
-    (): MessageData[] => [
-      ...(conversationData?.messages ?? []),
-      ...newMessages,
-    ],
-    [conversationData, newMessages],
-  )
+  React.useEffect((): (() => void) => {
+    if (!conversationData) {
+      return (): void => {}
+    }
 
-  const selectConversation = React.useCallback(
-    (selectedConversationId: UUID): void => {
-      setSelectedConversation(selectedConversationId)
-      setNewMessages([])
-    },
-    [],
-  )
-
-  const sendMessage = React.useCallback(
-    (replyMessageData: ReplyMessageData): void => {
-      if (conversationData) {
-        transmit('/conversation/speak_in_conversation', {
-          id: conversationData.from.id,
-          ...replyMessageData,
-        })
-
-        setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
-          ...prevNewMessages,
-          { direction: 'to', ...replyMessageData },
-        ])
+    const onMessageReceived = (
+      data: WebSocketReceivedMessageMessageReceived,
+    ) => {
+      if (conversationData.from.id !== data.from) {
+        return
       }
-    },
-    [conversationData],
-  )
+
+      setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
+        ...prevNewMessages,
+        { content: data.content, direction: 'from' },
+      ])
+    }
+
+    webSocket.onMessageReceived(onMessageReceived)
+
+    return (): void => {
+      webSocket.offMessageReceived(onMessageReceived)
+    }
+  }, [conversationData])
 
   return (
     <React.Fragment key={refreshKey}>
@@ -176,6 +231,11 @@ export function DashboardPage(): React.ReactElement {
   } else if (conversations === null) {
     return <p>Loading...</p>
   } else {
-    return <Dashboard conversations={conversations} />
+    return (
+      <Dashboard
+        conversations={conversations}
+        setConversations={setConversations}
+      />
+    )
   }
 }
