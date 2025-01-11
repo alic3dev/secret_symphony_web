@@ -1,3 +1,4 @@
+export { AccountPage } from '@/components/pages/AccountPage'
 export { DashboardPage } from '@/components/pages/DashboardPage'
 export { LoginPage } from '@/components/pages/LoginPage'
 export { LogoutPage } from '@/components/pages/LogoutPage'

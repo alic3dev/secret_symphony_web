@@ -4,6 +4,7 @@ import React from 'react'
 import * as ReactRouter from 'react-router'
 
 import {
+  AccountPage,
   DashboardPage,
   LoginPage,
   LogoutPage,
@@ -71,8 +72,6 @@ export function Router(): React.ReactElement {
           window.loggedIn = false
         }
 
-        window.identity = storedId
-
         setIsLoading(false)
       })
 
@@ -95,6 +94,7 @@ export function Router(): React.ReactElement {
                   path="/dashboard"
                   element={<DashboardPage />}
                 />
+                <ReactRouter.Route path="/account" element={<AccountPage />} />
                 <ReactRouter.Route path="/logout" element={<LogoutPage />} />
                 <ReactRouter.Route path="*" element={<Redirect to="/" />} />
               </>
