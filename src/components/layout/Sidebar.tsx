@@ -5,13 +5,14 @@ import type { ConversationData } from '@/types'
 import React from 'react'
 
 import { ConversationLabel } from '@/components/ConversationLabel'
+import { wire } from '@/utils/wire'
 
 import styles from '@/components/layout/Sidebar.module.scss'
 
 export interface SidebarProps {
   conversations: ConversationData[]
   selectConversation: (newConversationId: UUID) => void
-  selectedConversation: UUID
+  selectedConversation: UUID | null
 }
 
 export function Sidebar({
@@ -19,6 +20,47 @@ export function Sidebar({
   selectConversation,
   selectedConversation,
 }: SidebarProps): React.ReactElement {
+  const [inviteCodeError, setInviteCodeError] = React.useState<string | null>(
+    null,
+  )
+
+  const useInviteCode = React.useCallback(
+    (event: React.FormEvent<HTMLFormElement>): void => {
+      event.preventDefault()
+      event.stopPropagation()
+
+      const formData = new FormData(event.currentTarget)
+
+      wire
+        .transmit('conversation/use_invite_code', {
+          inviteCode: formData.get('invite-code'),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data) {
+            setInviteCodeError('Something went wrong')
+            return
+          }
+
+          if (data.error) {
+            setInviteCodeError(data.error)
+            return
+          }
+
+          if (!data.success) {
+            setInviteCodeError('Something went wrong')
+            return
+          }
+
+          window.location.reload()
+        })
+        .catch((): void => {
+          setInviteCodeError('Something went wrong')
+        })
+    },
+    [],
+  )
+
   return (
     <div className={styles['side-bar']}>
       <h1 className={styles.header}>Conversations</h1>
@@ -34,6 +76,12 @@ export function Sidebar({
           />
         ),
       )}
+
+      <form onSubmit={useInviteCode}>
+        {inviteCodeError ? <p>{inviteCodeError}</p> : <></>}
+        <input name="invite-code" type="text" placeholder="Invite Code" />
+        <button type="submit">+</button>
+      </form>
     </div>
   )
 }
