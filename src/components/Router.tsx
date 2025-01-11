@@ -14,6 +14,7 @@ import { Redirect } from '@/components/Redirect'
 
 import { getStoredId, clearStoredId } from '@/utils/identity'
 import { transmit } from '@/utils/wire/transmit'
+import { startWebsocketClient } from '@/utils/websocketClient'
 
 export function Router(): React.ReactElement {
   const [identity, setIdentity] = React.useState<Partial<StoredId>>({})
@@ -52,6 +53,8 @@ export function Router(): React.ReactElement {
           valid = data.valid
         }
 
+        window.identity = storedId
+
         if (valid) {
           setIdentity({
             id: storedId.id,
@@ -59,6 +62,8 @@ export function Router(): React.ReactElement {
           })
 
           window.loggedIn = true
+
+          startWebsocketClient()
         } else {
           setIdentity({})
           clearStoredId()
