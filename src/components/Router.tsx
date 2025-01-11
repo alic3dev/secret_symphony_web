@@ -4,6 +4,7 @@ import React from 'react'
 import * as ReactRouter from 'react-router'
 
 import {
+  AccountPage,
   DashboardPage,
   LoginPage,
   LogoutPage,
@@ -14,6 +15,7 @@ import { Redirect } from '@/components/Redirect'
 
 import { getStoredId, clearStoredId } from '@/utils/identity'
 import { transmit } from '@/utils/wire/transmit'
+import { startWebsocketClient } from '@/utils/websocketClient'
 
 export function Router(): React.ReactElement {
   const [identity, setIdentity] = React.useState<Partial<StoredId>>({})
@@ -52,6 +54,8 @@ export function Router(): React.ReactElement {
           valid = data.valid
         }
 
+        window.identity = storedId
+
         if (valid) {
           setIdentity({
             id: storedId.id,
@@ -59,14 +63,14 @@ export function Router(): React.ReactElement {
           })
 
           window.loggedIn = true
+
+          startWebsocketClient()
         } else {
           setIdentity({})
           clearStoredId()
 
           window.loggedIn = false
         }
-
-        window.identity = storedId
 
         setIsLoading(false)
       })
@@ -90,6 +94,7 @@ export function Router(): React.ReactElement {
                   path="/dashboard"
                   element={<DashboardPage />}
                 />
+                <ReactRouter.Route path="/account" element={<AccountPage />} />
                 <ReactRouter.Route path="/logout" element={<LogoutPage />} />
                 <ReactRouter.Route path="*" element={<Redirect to="/" />} />
               </>

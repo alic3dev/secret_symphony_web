@@ -127,6 +127,10 @@ input {
   }
 }
 
+input::placeholder {
+  color: var(--color-text);
+}
+
 .button-group {
   display: flex;
 }

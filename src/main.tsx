@@ -8,7 +8,7 @@ import { ca } from '@/utils/ca'
 import '@/global.scss'
 
 const rootElement: HTMLElement | null = document.getElementById('root')
-const DISPLAY_CA: boolean = false
+const DISPLAY_CA: boolean = true
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
