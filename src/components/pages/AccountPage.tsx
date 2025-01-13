@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Header } from '@/components/layout'
+
 import { wire } from '@/utils/wire'
 import { storeId } from '@/utils/identity'
 
@@ -103,6 +105,8 @@ export function AccountPage(): React.ReactElement {
 
   return (
     <div className={styles.page}>
+      <Header />
+
       <h1>Account</h1>
       <hr />
 
