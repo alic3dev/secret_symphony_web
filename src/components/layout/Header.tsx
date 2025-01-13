@@ -25,9 +25,20 @@ function HeaderLoggedIn(): React.ReactElement {
 
   return (
     <HeaderBase>
-      <Link className="button" to="/account">
-        A
-      </Link>
+      {window.location.pathname !== '/dashboard' ? (
+        <Link className="button" to="/dashboard">
+          D
+        </Link>
+      ) : (
+        <></>
+      )}
+      {window.location.pathname !== '/account' ? (
+        <Link className="button" to="/account">
+          A
+        </Link>
+      ) : (
+        <></>
+      )}
       <button onClick={logout}>X</button>
     </HeaderBase>
   )
