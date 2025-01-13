@@ -1,6 +1,6 @@
-# Secret Symphony
+# Secret Symphony - Web
 
-Secret Symphony
+The frontend application for Secret Symphony.
 
 A secure communication platform
 
@@ -12,3 +12,23 @@ A secure communication platform
   8  8 8  8 8             8           8
 888  8 8  8 8  8  8  8     88888888888
 ```
+
+## Install
+
+```sh
+pnpm i
+```
+
+## Build
+
+```sh
+pnpm build
+```
+
+## Development
+
+```sh
+pnpm dev
+```
+
+> ©️ Copyright "alic3dev (2024)" - All rights reserved
