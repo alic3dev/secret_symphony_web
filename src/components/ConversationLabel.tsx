@@ -6,6 +6,7 @@ import styles from '@/components/ConversationLabel.module.scss'
 
 export interface ConversationLabelProps {
   image?: string
+  href?: string
   title: string
   selected?: boolean
 
@@ -14,6 +15,7 @@ export interface ConversationLabelProps {
 
 export function ConversationLabel({
   image,
+  href,
   title,
   selected = false,
   onClick = () => {},
@@ -25,7 +27,7 @@ export function ConversationLabel({
       }`}
       onClick={onClick}
     >
-      <ImageBubble src={image} />
+      <ImageBubble src={image} href={href} />
       <div className={styles.title}>{title}</div>
     </div>
   )

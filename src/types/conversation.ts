@@ -16,6 +16,7 @@ export type MessageDirection = 'from' | 'to'
 export interface MessageData {
   content: string
   direction: MessageDirection
+  time: number
 }
 
 export interface ReplyMessageData {
