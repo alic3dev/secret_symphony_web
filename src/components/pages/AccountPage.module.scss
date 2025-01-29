@@ -1,1 +1,64 @@
+.content {
+  background: var(--color-surface-lighter);
 
+  max-width: 666px;
+
+  padding: 30px;
+
+  margin: auto;
+  margin-top: 50px;
+
+  border-radius: 5px;
+
+  box-shadow: var(--box-shadow-light);
+}
+
+.heading {
+  margin: 0;
+
+  text-align: center;
+}
+
+.info {
+  font-size: 1.2rem;
+}
+
+.profile {
+  display: flex;
+
+  margin-top: 20px;
+}
+
+.name {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.pronouns {
+  margin-top: 5px;
+
+  ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  li {
+    display: inline;
+    margin: 0;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
