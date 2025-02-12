@@ -86,8 +86,6 @@ export async function startWebsocketClient(): Promise<void> {
     const onMessage = (_data: MessageEvent): void => {
       let data: WebSocketReceivedMessageData
 
-      console.log(_data)
-
       try {
         data = JSON.parse(_data.data)
       } catch {

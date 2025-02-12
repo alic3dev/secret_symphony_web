@@ -1,4 +1,4 @@
-import type { MessageData, ReplyMessageData } from '@/types'
+import type { MessageData, ReplyMessageData, UserFull } from '@/types'
 
 import React from 'react'
 
@@ -7,6 +7,7 @@ import { ConversationMessage } from '@/components/conversation/ConversationMessa
 import styles from '@/components/conversation/Conversation.module.scss'
 
 interface ConversationProps {
+  user?: UserFull
   images: {
     from?: string
     to?: string
@@ -16,6 +17,7 @@ interface ConversationProps {
 }
 
 export function Conversation({
+  user,
   messages,
   images,
   sendMessage,
@@ -98,6 +100,12 @@ export function Conversation({
             (message: MessageData, index: number): React.ReactElement => (
               <div key={index}>
                 <ConversationMessage
+                  title={
+                    message.direction === 'from'
+                      ? user?.name
+                      : window.identity.name
+                  }
+                  time={message.time}
                   content={message.content}
                   direction={message.direction}
                   image={images[message.direction]}

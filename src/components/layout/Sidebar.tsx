@@ -77,10 +77,17 @@ export function Sidebar({
         ),
       )}
 
-      <form onSubmit={useInviteCode}>
+      <form onSubmit={useInviteCode} className={styles['invite-form']}>
         {inviteCodeError ? <p>{inviteCodeError}</p> : <></>}
-        <input name="invite-code" type="text" placeholder="Invite Code" />
-        <button type="submit">+</button>
+        <input
+          name="invite-code"
+          type="text"
+          placeholder="Invite Code"
+          className={styles['invite-input']}
+        />
+        <button type="submit" className={styles['invite-button']}>
+          +
+        </button>
       </form>
     </div>
   )

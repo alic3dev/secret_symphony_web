@@ -6,6 +6,7 @@ import { wire } from '@/utils/wire'
 import { storeId } from '@/utils/identity'
 
 import styles from '@/components/pages/AccountPage.module.scss'
+import { ImageBubble } from '../ImageBubble'
 
 export function AccountPage(): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -63,6 +64,7 @@ export function AccountPage(): React.ReactElement {
             setHasUpdatePassword(true)
 
             storeId({
+              ...window.identity,
               id: window.identity.id,
               token: (data as { token: string }).token,
             })
@@ -107,49 +109,85 @@ export function AccountPage(): React.ReactElement {
     <div className={styles.page}>
       <Header />
 
-      <h1>Account</h1>
-      <hr />
+      <div className={styles.content}>
+        <h1 className={styles.heading}>Account</h1>
 
-      <h2>Invite codes</h2>
+        <div className={styles.profile}>
+          <ImageBubble
+            large
+            title={window.identity.name}
+            src={`/images/people/${window.identity.image}`}
+          />
 
-      <ul>
-        {inviteCodes.map(
-          (inviteCode: string): React.ReactElement => (
-            <li key={inviteCode}>{inviteCode}</li>
-          ),
-        )}
-      </ul>
+          <div className={styles.info}>
+            <h2 className={styles.name}>{window.identity.name}</h2>
+            {window.identity.pronouns ? (
+              <div className={styles.pronouns}>
+                (
+                <ul>
+                  {window.identity.pronouns.map(
+                    (pronoun: string, index: number): React.ReactElement => (
+                      <li key={`${pronoun}:${index}`}>
+                        {index > 0 ? '/' : ''}
+                        {pronoun}
+                      </li>
+                    ),
+                  )}
+                </ul>
+                )
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
 
-      <button onClick={onGenerateInviteCodeClick}>Generate invite code</button>
+        <div className={styles.section}>
+          <h2>Invite codes</h2>
 
-      <hr />
+          <ul>
+            {inviteCodes.map(
+              (inviteCode: string): React.ReactElement => (
+                <li key={inviteCode}>{inviteCode}</li>
+              ),
+            )}
+          </ul>
 
-      <form onSubmit={onFormSubmit}>
-        <h2>Update password</h2>
-        {error ? <p>{error}</p> : <></>}
-        {hasUpdatedPassword ? <p>Password updated!</p> : <></>}
-        <input
-          type="password"
-          name="password-current"
-          placeholder="Current password"
-          disabled={isLoading}
-        />
-        <input
-          type="password"
-          name="password-new"
-          placeholder="New password"
-          disabled={isLoading}
-        />
-        <input
-          type="password"
-          name="password-retyped-new"
-          placeholder="Retype new password"
-          disabled={isLoading}
-        />
-        <button type="submit" disabled={isLoading}>
-          Update password
-        </button>
-      </form>
+          <button onClick={onGenerateInviteCodeClick}>
+            Generate invite code
+          </button>
+        </div>
+
+        <div className={styles.section}>
+          <h2>Update password</h2>
+
+          <form onSubmit={onFormSubmit} className={styles.form}>
+            {error ? <p>{error}</p> : <></>}
+            {hasUpdatedPassword ? <p>Password updated!</p> : <></>}
+            <input
+              type="password"
+              name="password-current"
+              placeholder="Current password"
+              disabled={isLoading}
+            />
+            <input
+              type="password"
+              name="password-new"
+              placeholder="New password"
+              disabled={isLoading}
+            />
+            <input
+              type="password"
+              name="password-retyped-new"
+              placeholder="Retype new password"
+              disabled={isLoading}
+            />
+            <button type="submit" disabled={isLoading}>
+              Update password
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }

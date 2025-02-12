@@ -174,6 +174,7 @@ export function Dashboard({
         />
 
         <Conversation
+          user={conversationData?.from}
           images={{
             from: `/images/people/${conversationData?.from.image}`,
             to: `/images/people/${window.identity.image}`,

@@ -5,6 +5,7 @@ export interface StoredId {
   token: string
   name?: string
   image?: string
+  pronouns?: string[]
 }
 
 export function getStoredId(): StoredId | undefined {
@@ -16,6 +17,18 @@ export function getStoredId(): StoredId | undefined {
     window.localStorage.getItem('QNNVOL') || undefined
   const image: string | undefined =
     window.localStorage.getItem('ZCVOTWUT') || undefined
+  let pronouns: string | string[] | undefined =
+    window.localStorage.getItem('POAPNV') || undefined
+
+  if (pronouns) {
+    try {
+      pronouns = JSON.parse(pronouns)
+
+      if (!Array.isArray(pronouns)) {
+        pronouns = undefined
+      }
+    } catch {}
+  }
 
   if (id && token) {
     return {
@@ -23,11 +36,12 @@ export function getStoredId(): StoredId | undefined {
       token,
       name,
       image,
+      pronouns: pronouns as string[] | undefined,
     }
   }
 }
 
-export function storeId({ id, token, name, image }: StoredId): void {
+export function storeId({ id, token, name, image, pronouns }: StoredId): void {
   window.localStorage.setItem('QTJIEWUOIJ', id)
   window.localStorage.setItem('ZVTJERKL', token)
 
@@ -37,6 +51,10 @@ export function storeId({ id, token, name, image }: StoredId): void {
 
   if (image) {
     window.localStorage.setItem('ZCVOTWUT', image)
+  }
+
+  if (pronouns) {
+    window.localStorage.setItem('POAPNV', JSON.stringify(pronouns))
   }
 }
 

@@ -8,6 +8,9 @@
 
   --color-white: #ffffff;
   --color-black: #000000;
+  --color-black-rgb: 0 0 0;
+
+  --box-shadow-light: 0px 4px 4px rgba(var(--color-black-rgb) / 0.05);
 }
 
 @media (prefers-color-scheme: light) {
