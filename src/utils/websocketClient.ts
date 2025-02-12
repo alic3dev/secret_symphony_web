@@ -52,7 +52,7 @@ export function offMessageReceived(
   callback: (data: WebSocketReceivedMessageMessageReceived) => void,
 ) {
   messageReceievedCallbacks = messageReceievedCallbacks.filter(
-    (cb) => callback === cb,
+    (cb) => callback !== cb,
   )
 }
 
