@@ -151,7 +151,7 @@ export function Dashboard({
 
       setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
         ...prevNewMessages,
-        { content: data.content, direction: 'from' },
+        { content: data.content, time: data.time, direction: 'from' },
       ])
     }
 
