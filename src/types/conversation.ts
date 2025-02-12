@@ -21,6 +21,7 @@ export interface MessageData {
 
 export interface ReplyMessageData {
   content: string
+  time: number
 }
 
 export interface ConversationData {

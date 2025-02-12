@@ -75,6 +75,7 @@ export function Conversation({
 
       sendMessage({
         content: replyText,
+        time: Date.now(), // FIXME: This should be set by the server, should reflect states of "unsent" | "sending" | "error", etc...
       })
 
       setReplyText('')
