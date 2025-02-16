@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build_continuous_integration:
     runs-on: ubuntu-latest
 
     env:
