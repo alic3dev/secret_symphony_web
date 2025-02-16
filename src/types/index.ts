@@ -1,3 +1,5 @@
+export type * from '@/types/hooks'
+
 export type * from '@/types/conversation'
 export type * from '@/types/person'
 export type * from '@/types/personImage'
