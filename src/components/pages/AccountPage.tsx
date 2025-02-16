@@ -1,5 +1,7 @@
 import React from 'react'
 
+import type { LoadDataInitialOnResultResult } from '@/types'
+
 import { Header } from '@/components/layout'
 
 import { wire } from '@/utils/wire'
@@ -7,6 +9,11 @@ import { storeId } from '@/utils/identity'
 
 import styles from '@/components/pages/AccountPage.module.scss'
 import { ImageBubble } from '../ImageBubble'
+import { useLoad_data_initial } from '@/hooks/use_load_data_initial'
+
+interface GetInviteCodesInitialDataResult {
+  inviteCodes: string[]
+}
 
 export function AccountPage(): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
@@ -94,16 +101,23 @@ export function AccountPage(): React.ReactElement {
       })
   }, [])
 
-  React.useEffect((): void => {
-    wire
-      .transmit('account/get_invite_codes', {})
-      .then((res: Response): Promise<{ inviteCodes: string[] }> => res.json())
-      .then((data: { inviteCodes: string[] }) => {
-        if (data && typeof data === 'object' && data.inviteCodes) {
-          setInviteCodes(data.inviteCodes)
+  useLoad_data_initial<GetInviteCodesInitialDataResult>(
+    'account/get_invite_codes',
+    {},
+    (
+      result: LoadDataInitialOnResultResult<GetInviteCodesInitialDataResult>,
+    ): void => {
+      if (result.data) {
+        if (typeof result.data === 'object' && result.data.inviteCodes) {
+          setInviteCodes(result.data.inviteCodes)
+        } else {
+          throw new Error('Unknown data returned from: account/get_invite_code')
         }
-      })
-  }, [])
+      } else if (result.error) {
+        throw result.error
+      }
+    },
+  )
 
   return (
     <div className={styles.page}>
