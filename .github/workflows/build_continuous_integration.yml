@@ -25,6 +25,9 @@ jobs:
       with:
         node-version: ${{ env.node_version }}
         cache: 'pnpm'
+
+    - name: pnpm_install
+      run: pnpm i
         
     - name: pnpm_lint
       run: pnpm lint
