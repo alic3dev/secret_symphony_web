@@ -14,6 +14,10 @@ const navigationItems: NavigationItem[] = [
     text: 'DASHBOARD',
   },
   {
+    to: '/account',
+    text: 'ACCOUNT',
+  },
+  {
     to: '/logout',
     text: 'LOGOUT',
   },
