@@ -30,7 +30,7 @@ export function RootPage(): React.ReactElement {
         <p className={styles.description}>A secure communication platform.</p>
       </div>
 
-      <nav className={styles.navigation}>
+      <nav className={`surface ${styles.navigation}`}>
         <h4 className={styles['navigation-heading']}>NAVIGATION</h4>
         {navigationItems.map(
           (
