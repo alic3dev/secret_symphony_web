@@ -31,7 +31,7 @@ export function RootPage(): React.ReactElement {
       </div>
 
       <nav className={`surface ${styles.navigation}`}>
-        <h4 className={styles['navigation-heading']}>NAVIGATION</h4>
+        <h4>NAVIGATION</h4>
         {navigationItems.map(
           (
             navigationItem: NavigationItem,
