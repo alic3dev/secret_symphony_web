@@ -1,0 +1,12 @@
+.surface {
+  max-width: max-content;
+
+  margin: auto;
+  padding: 1rem;
+
+  background: var(--color-surface);
+
+  border: 1px solid var(--color-text);
+
+  box-shadow: var(--box-shadow-light);
+}

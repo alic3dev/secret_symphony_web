@@ -120,10 +120,9 @@ export function AccountPage(): React.ReactElement {
   )
 
   return (
-    <div className={styles.page}>
+    <div>
       <Header />
-
-      <div className={styles.content}>
+      <div className={`surface ${styles.content}`}>
         <h1 className={styles.heading}>Account</h1>
 
         <div className={styles.profile}>
