@@ -14,6 +14,10 @@ const navigationItems: NavigationItem[] = [
     text: 'DASHBOARD',
   },
   {
+    to: '/account',
+    text: 'ACCOUNT',
+  },
+  {
     to: '/logout',
     text: 'LOGOUT',
   },
@@ -30,8 +34,8 @@ export function RootPage(): React.ReactElement {
         <p className={styles.description}>A secure communication platform.</p>
       </div>
 
-      <nav className={styles.navigation}>
-        <h4 className={styles['navigation-heading']}>NAVIGATION</h4>
+      <nav className={`surface ${styles.navigation}`}>
+        <h4>NAVIGATION</h4>
         {navigationItems.map(
           (
             navigationItem: NavigationItem,
