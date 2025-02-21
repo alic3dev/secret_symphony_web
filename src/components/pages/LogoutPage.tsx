@@ -15,6 +15,10 @@ export function LogoutPage(): React.ReactElement {
 
   return (
     <div className="surface">
+      <h4>Are you sure you want to logout?</h4>
+
+      <br />
+
       <div className="button-group">
         <a className="button" href="/">
           No
