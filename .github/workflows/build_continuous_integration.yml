@@ -1,4 +1,4 @@
-name: build_continuous_integration
+name: continuous_integration_build
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build_continuous_integration:
+  continuous_integration_build:
     runs-on: ubuntu-latest
 
     env:
