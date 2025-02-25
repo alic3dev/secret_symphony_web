@@ -1,4 +1,4 @@
-import type { StoredId } from '@/utils/identity'
+import type { StoredId } from '@/types'
 
 import React from 'react'
 import * as ReactRouter from 'react-router'
@@ -13,16 +13,16 @@ import {
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { Redirect } from '@/components/Redirect'
 
-import { getStoredId, clearStoredId } from '@/utils/identity'
-import { transmit } from '@/utils/wire/transmit'
-import { startWebsocketClient } from '@/utils/websocketClient'
+import { identity, websocketClient, wire } from '@/utils'
 
 export function Router(): React.ReactElement {
-  const [identity, setIdentity] = React.useState<Partial<StoredId>>({})
+  const [storedIdentity, setStoredIdentity] = React.useState<Partial<StoredId>>(
+    {},
+  )
 
   const loggedIn = React.useMemo<boolean>(
-    (): boolean => !!(identity.id && identity.token),
-    [identity],
+    (): boolean => !!(storedIdentity.id && storedIdentity.token),
+    [storedIdentity],
   )
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
@@ -33,17 +33,18 @@ export function Router(): React.ReactElement {
     }
 
     let aborted: boolean = false
-    const storedId: StoredId | undefined = getStoredId()
+    const storedId: StoredId | undefined = identity.getStoredId()
 
     if (!storedId) {
       setIsLoading(false)
       return
     }
 
-    transmit('/auth/validate_token', {
-      id: storedId.id,
-      token: storedId.token,
-    })
+    wire
+      .transmit('/auth/validate_token', {
+        id: storedId.id,
+        token: storedId.token,
+      })
       .then((res: Response): Promise<{ valid: boolean }> => res.json())
       .then((data: { valid: boolean }): void => {
         if (aborted) return
@@ -57,17 +58,17 @@ export function Router(): React.ReactElement {
         window.identity = storedId
 
         if (valid) {
-          setIdentity({
+          setStoredIdentity({
             id: storedId.id,
             token: storedId.token,
           })
 
           window.loggedIn = true
 
-          startWebsocketClient()
+          websocketClient.startWebsocketClient()
         } else {
-          setIdentity({})
-          clearStoredId()
+          setStoredIdentity({})
+          identity.clearStoredId()
 
           window.loggedIn = false
         }

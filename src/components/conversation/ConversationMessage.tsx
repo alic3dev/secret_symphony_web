@@ -4,7 +4,7 @@ import React from 'react'
 
 import { ImageBubble } from '@/components/ImageBubble'
 
-import { format_date } from '@/utils/format_date'
+import { format_date } from '@/utils'
 
 import styles from '@/components/conversation/ConversationMessage.module.scss'
 

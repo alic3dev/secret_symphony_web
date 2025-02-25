@@ -2,14 +2,14 @@ import React from 'react'
 
 import type { LoadDataInitialOnResultResult } from '@/types'
 
+import { ImageBubble } from '@/components/ImageBubble'
 import { Header } from '@/components/layout'
 
-import { wire } from '@/utils/wire'
-import { storeId } from '@/utils/identity'
+import { useLoad_data_initial } from '@/hooks'
+
+import { wire, identity } from '@/utils'
 
 import styles from '@/components/pages/AccountPage.module.scss'
-import { ImageBubble } from '../ImageBubble'
-import { useLoad_data_initial } from '@/hooks/use_load_data_initial'
 
 interface GetInviteCodesInitialDataResult {
   inviteCodes: string[]
@@ -70,7 +70,7 @@ export function AccountPage(): React.ReactElement {
           } else if ((data as { token?: string }).token) {
             setHasUpdatePassword(true)
 
-            storeId({
+            identity.storeId({
               ...window.identity,
               id: window.identity.id,
               token: (data as { token: string }).token,

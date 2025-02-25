@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { LoginForm } from '@/components/forms'
+import { Header } from '@/components/layout'
+
 import styles from '@/components/pages/LoginPage.module.scss'
-import { LoginForm } from '@/components/forms/LoginForm'
-import { Header } from '@/components/layout/Header'
 
 export function LoginPage(): React.ReactElement {
   return (

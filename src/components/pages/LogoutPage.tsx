@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { clearStoredId } from '@/utils/identity'
+import { identity } from '@/utils'
 
 export function LogoutPage(): React.ReactElement {
   const onLogoutClick = React.useCallback((): void => {
-    clearStoredId()
+    identity.clearStoredId()
 
     if (window.location.pathname === '/logout') {
       window.location.href = '/'

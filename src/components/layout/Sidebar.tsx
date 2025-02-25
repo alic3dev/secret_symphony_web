@@ -4,8 +4,9 @@ import type { ConversationData } from '@/types'
 
 import React from 'react'
 
-import { ConversationLabel } from '@/components/ConversationLabel'
-import { wire } from '@/utils/wire'
+import { ConversationLabel } from '@/components/conversation'
+
+import { wire } from '@/utils'
 
 import styles from '@/components/layout/Sidebar.module.scss'
 
