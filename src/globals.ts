@@ -1,4 +1,4 @@
-import type { StoredId } from '@/utils/identity'
+import type { StoredId } from '@/types'
 
 declare global {
   interface Window {

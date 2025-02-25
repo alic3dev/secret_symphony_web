@@ -1,9 +1,8 @@
-import type { StoredId } from '@/utils/identity'
+import { StoredId } from '@/types'
 
 import React from 'react'
 
-import { transmit } from '@/utils/wire/transmit'
-import { storeId } from '@/utils/identity'
+import { wire, identity } from '@/utils'
 
 import styles from '@/components/forms/LoginForm.module.scss'
 
@@ -31,7 +30,7 @@ export function LoginForm(): React.ReactElement {
       }
 
       try {
-        const res: Response = await transmit('/auth/login', {
+        const res: Response = await wire.transmit('/auth/login', {
           email,
           password,
         })
@@ -42,7 +41,7 @@ export function LoginForm(): React.ReactElement {
           setState('error')
           setError((data as { error: string }).error)
         } else if (Object.prototype.hasOwnProperty.call(data, 'token')) {
-          storeId(data as StoredId)
+          identity.storeId(data as StoredId)
 
           window.location.reload()
         } else {

@@ -1,11 +1,11 @@
 import type {
   LoadDataInitialOnResult,
   LoadDataInitialStatusReference,
-} from '@/types/hooks/use_load_data_initial'
+} from '@/types'
 
 import React from 'react'
 
-import { wire } from '@/utils/wire'
+import { wire } from '@/utils'
 
 export function useLoad_data_initial<LoadDataInitialResultingData = unknown>(
   route: string,

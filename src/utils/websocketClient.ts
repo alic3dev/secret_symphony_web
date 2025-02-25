@@ -3,7 +3,7 @@ import type { UUID } from 'crypto'
 import {
   WebSocketReceivedMessageData,
   WebSocketReceivedMessageMessageReceived,
-} from '@/types/websocket'
+} from '@/types'
 
 let webSocket: WebSocket | null = null
 

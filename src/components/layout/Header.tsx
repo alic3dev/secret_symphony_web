@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import { Logo } from '@/components/decorative/Logo'
+import { Logo } from '@/components/decorative'
 
-import { clearStoredId } from '@/utils/identity'
+import { identity } from '@/utils'
 
 import styles from '@/components/layout/Header.module.scss'
 
@@ -19,7 +19,7 @@ function HeaderBase({ children }: React.PropsWithChildren): React.ReactElement {
 
 function HeaderLoggedIn(): React.ReactElement {
   const logout = React.useCallback<() => void>((): void => {
-    clearStoredId()
+    identity.clearStoredId()
     window.location.href = '/'
   }, [])
 

@@ -1,16 +1,18 @@
 import type { UUID } from 'crypto'
 
-import type { MessageData, ReplyMessageData, ConversationData } from '@/types'
-import type { WebSocketReceivedMessageMessageReceived } from '@/types/websocket'
+import type {
+  MessageData,
+  ReplyMessageData,
+  ConversationData,
+  WebSocketReceivedMessageMessageReceived,
+} from '@/types'
 
 import React from 'react'
 
 import { Header, Sidebar } from '@/components/layout'
 import { Conversation } from '@/components/conversation'
 
-import { transmit } from '@/utils/wire/transmit'
-
-import * as webSocket from '@/utils/websocketClient'
+import { wire, websocketClient } from '@/utils'
 
 import styles from '@/components/pages/DashboardPage.module.scss'
 
@@ -92,7 +94,7 @@ export function Dashboard({
   const sendMessage = React.useCallback(
     (replyMessageData: ReplyMessageData): void => {
       if (conversationData) {
-        webSocket.sendMessage({
+        websocketClient.sendMessage({
           to: conversationData.from.id,
           content: replyMessageData.content,
         })
@@ -111,9 +113,10 @@ export function Dashboard({
 
     let aborted: boolean = false
 
-    transmit('/conversation/get_conversation', {
-      id: conversationData.from.id,
-    })
+    wire
+      .transmit('/conversation/get_conversation', {
+        id: conversationData.from.id,
+      })
       .then(
         (
           res: Response,
@@ -155,10 +158,10 @@ export function Dashboard({
       ])
     }
 
-    webSocket.onMessageReceived(onMessageReceived)
+    websocketClient.onMessageReceived(onMessageReceived)
 
     return (): void => {
-      webSocket.offMessageReceived(onMessageReceived)
+      websocketClient.offMessageReceived(onMessageReceived)
     }
   }, [conversationData])
 
@@ -196,7 +199,8 @@ export function DashboardPage(): React.ReactElement {
   React.useEffect((): (() => void) => {
     let aborted: boolean = false
 
-    transmit('/dashboard/load_dashboard', {})
+    wire
+      .transmit('/dashboard/load_dashboard', {})
       .then(
         (
           res: Response,
