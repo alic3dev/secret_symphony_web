@@ -1,4 +1,5 @@
 export { AccountPage } from '@/components/pages/AccountPage'
+export { Create_account_page } from '@/components/pages/create_account_page'
 export { DashboardPage } from '@/components/pages/DashboardPage'
 export { LoginPage } from '@/components/pages/LoginPage'
 export { LogoutPage } from '@/components/pages/LogoutPage'

@@ -1,0 +1,110 @@
+.login-or-create-page {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  width: 100%;
+
+  overflow: hidden;
+}
+
+@keyframes background-keyframes {
+  0% {
+    transform: skewX(30deg) scale(1);
+  }
+  35% {
+    transform: skewX(30.579928deg) scale(0.99239);
+  }
+  52% {
+    transform: skewX(30.0187847deg) scale(1.0043);
+  }
+  86% {
+    transform: skewX(29.848deg) scale(1.0135);
+  }
+  100% {
+    transform: skewX(30deg) scale(1);
+  }
+}
+
+@keyframes background-secondary-keyframes {
+  0% {
+    transform: skewX(0deg) scale(1);
+  }
+  26% {
+    transform: skewX(-0.57992deg) scale(1.0284);
+  }
+  58% {
+    transform: skewX(0.2187847deg) scale(0.9967);
+  }
+  63% {
+    transform: skewX(0.062deg) scale(0.9975);
+  }
+  100% {
+    transform: skewX(0deg) scale(1);
+  }
+}
+
+.background,
+.background-secondary {
+  position: absolute;
+  top: 0;
+  left: -30%;
+  right: -50%;
+  bottom: 0;
+
+  pointer-events: none;
+  user-select: none;
+
+  font-size: 50rem;
+  line-height: 10rem;
+  word-break: break-all;
+  color: var(--color-accent);
+  text-shadow: 10px 10px var(--color-black);
+
+  mix-blend-mode: color-burn;
+  filter: drop-shadow(-1px 15px 20px var(--color-black));
+
+  box-shadow: inset 0px 0px min(10vw, 10vh) min(1vw, 1vh) rgba(25, 2, 3, 1);
+
+  transform: skewX(30deg);
+
+  animation: background-keyframes 10178ms ease-in-out 0ms infinite alternate
+    both;
+
+  @media (prefers-color-scheme: dark) {
+    mix-blend-mode: soft-light;
+  }
+}
+
+.background-secondary {
+  top: 13%;
+  left: -9%;
+
+  color: var(--color-accent-secondary);
+
+  transform: skewX(0deg);
+
+  animation: background-secondary-keyframes 9291ms ease-in-out 15ms infinite
+    alternate-reverse both;
+}
+
+.login-or-create-form-container {
+  width: 100%;
+  max-width: 300px;
+
+  background: var(--color-surface-lighter);
+
+  text-align: center;
+
+  z-index: 1;
+}
+
+.login-or-create-form-heading {
+  padding: 0;
+  margin: 1rem;
+  margin-bottom: 2rem;
+}
