@@ -1,5 +1,3 @@
-import type { MessageDirection } from '@/types'
-
 import React from 'react'
 
 import { ImageBubble } from '@/components/ImageBubble'
@@ -7,6 +5,8 @@ import { ImageBubble } from '@/components/ImageBubble'
 import { format_date } from '@/utils'
 
 import styles from '@/components/conversation/ConversationMessage.module.scss'
+
+type MessageDirection = 'from' | 'to'
 
 interface ConversationMessageProps {
   title?: string

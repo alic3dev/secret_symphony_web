@@ -101,7 +101,7 @@ export function Dashboard({
 
         setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
           ...prevNewMessages,
-          { direction: 'to', ...replyMessageData },
+          { sent_from_id: window.identity.id, ...replyMessageData },
         ])
       }
     },
@@ -148,13 +148,17 @@ export function Dashboard({
     const onMessageReceived = (
       data: WebSocketReceivedMessageMessageReceived,
     ) => {
-      if (conversationData.from.id !== data.from) {
+      if (conversationData.from.id !== data.sent_from_id) {
         return
       }
 
       setNewMessages((prevNewMessages: MessageData[]): MessageData[] => [
         ...prevNewMessages,
-        { content: data.content, time: data.time, direction: 'from' },
+        {
+          content: data.content,
+          time: data.time,
+          sent_from_id: data.sent_from_id,
+        },
       ])
     }
 
