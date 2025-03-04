@@ -4,7 +4,7 @@ import React from 'react'
 
 import { wire, identity } from '@/utils'
 
-import styles from '@/components/forms/LoginForm.module.scss'
+import styles from '@/components/forms/create_or_login_form.module.scss'
 
 type LoginState = 'waiting' | 'submitting' | 'error'
 
@@ -56,7 +56,7 @@ export function LoginForm(): React.ReactElement {
   )
 
   return (
-    <form className={styles['login-form']} onSubmit={onFormSubmit}>
+    <form className={styles['create_or_login_form']} onSubmit={onFormSubmit}>
       {error ? <p>{error}</p> : <></>}
 
       <input
