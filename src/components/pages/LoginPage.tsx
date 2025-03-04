@@ -1,15 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 import { LoginForm } from '@/components/forms'
-import { Header } from '@/components/layout'
 
-import styles from '@/components/pages/LoginPage.module.scss'
+import styles from '@/components/pages/login_or_create_page.module.scss'
 
 export function LoginPage(): React.ReactElement {
-  return (
-    <div className={styles['login-page']}>
-      <Header />
+  React.useEffect((): void => {
+    const pathname: string = window.location.pathname
 
+    if (pathname !== '/login') {
+      window.localStorage.setItem('ss_login_referral', pathname)
+    }
+  }, [])
+
+  return (
+    <div className={styles['login-or-create-page']}>
       <div className={styles.background}>
         SECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONY
       </div>
@@ -17,10 +23,14 @@ export function LoginPage(): React.ReactElement {
         SECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONYSECRETSYMPHONY
       </div>
 
-      <div className={`surface ${styles['login-form-container']}`}>
-        <h2 className={styles['login-form-heading']}>LOGIN</h2>
+      <div className={`surface ${styles['login-or-create-form-container']}`}>
+        <h2 className={styles['login-or-create-form-heading']}>LOGIN</h2>
 
         <LoginForm />
+
+        <br />
+
+        <Link to="/create-account">create account</Link>
       </div>
     </div>
   )
