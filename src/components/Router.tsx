@@ -5,6 +5,7 @@ import * as ReactRouter from 'react-router'
 
 import {
   AccountPage,
+  Create_account_page,
   DashboardPage,
   LoginPage,
   LogoutPage,
@@ -100,7 +101,13 @@ export function Router(): React.ReactElement {
                 <ReactRouter.Route path="*" element={<Redirect to="/" />} />
               </>
             ) : (
-              <ReactRouter.Route path="*" element={<LoginPage />} />
+              <>
+                <ReactRouter.Route
+                  path="/create-account"
+                  element={<Create_account_page />}
+                />
+                <ReactRouter.Route path="*" element={<LoginPage />} />
+              </>
             )}
           </ReactRouter.Routes>
         </ReactRouter.BrowserRouter>

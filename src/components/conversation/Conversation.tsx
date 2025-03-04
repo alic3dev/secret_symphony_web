@@ -102,14 +102,22 @@ export function Conversation({
               <div key={index}>
                 <ConversationMessage
                   title={
-                    message.direction === 'from'
-                      ? user?.name
-                      : window.identity.name
+                    message.sent_from_id === window.identity.id
+                      ? window.identity.name
+                      : user?.name
                   }
                   time={message.time}
                   content={message.content}
-                  direction={message.direction}
-                  image={images[message.direction]}
+                  direction={
+                    message.sent_from_id === window.identity.id ? 'to' : 'from'
+                  }
+                  image={
+                    images[
+                      message.sent_from_id === window.identity.id
+                        ? 'to'
+                        : 'from'
+                    ]
+                  }
                 />
               </div>
             ),

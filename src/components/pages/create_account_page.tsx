@@ -1,18 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import { LoginForm } from '@/components/forms'
+import { Create_account_form } from '@/components/forms'
 
 import styles from '@/components/pages/login_or_create_page.module.scss'
 
-export function LoginPage(): React.ReactElement {
-  React.useEffect((): void => {
-    const pathname: string = window.location.pathname
-
-    if (pathname !== '/login') {
-      window.localStorage.setItem('ss_login_referral', pathname)
-    }
-  }, [])
+export function Create_account_page(): React.ReactElement {
+  React.useEffect((): void => {}, [])
 
   return (
     <div className={styles['login-or-create-page']}>
@@ -24,13 +18,15 @@ export function LoginPage(): React.ReactElement {
       </div>
 
       <div className={`surface ${styles['login-or-create-form-container']}`}>
-        <h2 className={styles['login-or-create-form-heading']}>LOGIN</h2>
+        <h2 className={styles['login-or-create-form-heading']}>
+          create account
+        </h2>
 
-        <LoginForm />
+        <Create_account_form />
 
         <br />
 
-        <Link to="/create-account">create account</Link>
+        <Link to="/login">login</Link>
       </div>
     </div>
   )

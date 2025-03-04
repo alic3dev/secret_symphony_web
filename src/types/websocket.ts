@@ -25,7 +25,7 @@ export interface WebSocketReceivedMessageMessageSendResult
 export interface WebSocketReceivedMessageMessageReceived
   extends WebSocketReceivedMessageDataBase {
   action: 'message-received'
-  from: UUID
+  sent_from_id: UUID
   content: string
   time: number
 }
