@@ -1,34 +1,28 @@
-# Secret Symphony - Web
+# secret_symphony_web
 
-The frontend application for Secret Symphony.
+client_frontend.for->{secret_symphony}
 
-A secure communication platform
+secure->{communication:platform}
 
-```
-888  8    8
-8 8  8    8               8888       88
-8    8    8               8888      88
-888  888  888                  8 8
-  8  8 8  8 8             8           8
-888  8 8  8 8  8  8  8     88888888888
-```
+## install
 
-## Install
-
-```sh
+```zsh
 pnpm i
 ```
 
-## Build
+## build
 
-```sh
+```zsh
 pnpm build
 ```
 
-## Development
+## development
 
-```sh
+```zsh
 pnpm dev
 ```
 
-> ©️ Copyright "alic3dev (2024)" - All rights reserved
+## copyleft|copyright
+
+> © [copyright|copyleft]->{alic3dev:[2024|2025]}:[all_rights_reserved|all_lefts_reserved]
+
